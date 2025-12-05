@@ -1,3 +1,5 @@
+from common import print_binary_tree
+from collections import deque
 class BinaryTreeNode:
     def __init__(self, data):
         self.data=data
@@ -6,33 +8,27 @@ class BinaryTreeNode:
 
 def input_data():
     data=int(input("Enter the data for the Node:"))
-    node=BinaryTreeNode(data)
-
-    left_data=int(input(f"Enter the left data of {node.data}"))
-    left_node=BinaryTreeNode(left_data)
-    node.left=left_node
-
-    right_data=int(input(f"Enter the right data of {node.data}"))
-    right_node=BinaryTreeNode(right_node)
-    node.right=right_node
-
-
-def print_binary_tree(root):
-    if(root == None):
+    if data == -1:
         return None
-    print(f"{root.data}",end=": ")
-    if(root.left!=None):
-        print(f"L-->{root.left.data}",end=",")
-  
-    else:
-        print("L-->None",end=",")
-    if(root.right!=None):
-        print(f"R-->{root.right.data}",end="")
-    else:
-        print("R-->None",end=",")
-    print()
-    print_binary_tree(root.left)
-    print_binary_tree(root.right)
+    node=BinaryTreeNode(data)
+    
+    queue=deque([node])
+    while queue:
+        curr_node=queue.popleft()
+        left_data=int(input(f"Enter the left data of {curr_node.data}:"))
+        if left_data != -1:
+            left_node=BinaryTreeNode(left_data)
+            curr_node.left=left_node
+            queue.append(left_node)
 
+        right_data=int(input(f"Enter the right data of {curr_node.data}:"))
+        if right_data != -1:
+            right_node=BinaryTreeNode(right_data)
+            node.right=right_node
+            queue.append(right_node)
 
+    
+    return node
 
+node=input_data()
+print_binary_tree(node)
